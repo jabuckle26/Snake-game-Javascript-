@@ -2,32 +2,32 @@ item = document.querySelector('.item');
 
 const initialiseGame = (character) => {
     console.log(character);
-    let enemyPic = document.querySelector('.enemy');
+    let enemyPic = document.querySelector('.character-image-holder');
     switch (character) {
         case "O-Ren":
             timeFrame = 500;
             item.style.backgroundColor = "red";
-            enemyPic.style.backgroundImage="url('./img/lucy-lui.jpg')";
+            enemyPic.style.backgroundImage = "url('./img/lucy-lui.jpg')";
             break
         case "Vernita":
             timeFrame = 250;
             item.style.backgroundColor = "blue";
-            enemyPic.style.backgroundImage="url('./img/vernita-green.jpg')";
+            enemyPic.style.backgroundImage = "url('./img/vernita-green.jpg')";
             break
         case "Budd":
             timeFrame = 100;
             item.style.backgroundColor = "green";
-            enemyPic.style.backgroundImage="url('./img/Budd.jpg')";
+            enemyPic.style.backgroundImage = "url('./img/Budd.jpg')";
             break
         case "Elle":
             timeFrame = 25;
             item.style.backgroundColor = "white";
-            enemyPic.style.backgroundImage="url('./img/elle-driver.jpg)";
+            enemyPic.style.backgroundImage = "url('./img/elle-driver.jpg)";
             break
         case "Bill":
             timeFrame = 10;
             item.style.backgroundColor = "grey";
-            enemyPic.style.backgroundImage="url('./img/bill.jpg')";
+            enemyPic.style.backgroundImage = "url('./img/bill.jpg')";
             break
     }
 
@@ -139,8 +139,8 @@ const genItem = () => {
     console.log(item);
     item.style.display = "inline-block";
     //set to a random point on the grid (of even co-ords)
-    item.style.top = Math.ceil((getRandomInt(0, 490) + 1) / 10) * 10 + 'px';
-    item.style.left = Math.ceil((getRandomInt(0, 490) + 1) / 10) * 10 + 'px';
+    item.style.top = Math.ceil((getRandomInt(10, 460) + 1) / 10) * 10 + 'px';
+    item.style.left = Math.ceil((getRandomInt(10, 460) + 1) / 10) * 10 + 'px';
     console.log(item);
     return false;
 }
@@ -189,10 +189,19 @@ const collisionCheck = (locX, locY) => {
     if (snakeX < 0 || snakeY < 0 || snakeX > 480 || snakeY > 480) {
         console.log('CRASH')
         return true
-    } else if ((snakeObject.lenght > 2) && (snakeObject.includes([loxX, locY]))) {
+    } else if ((snakeObject.lenght > 2) && (internalSnakeCheck(loxX, locY))) {
         console.log('SELF EATING NOT ALLOWED');
         return true
     } else { return false }
+}
+
+const internalSnakeCheck = (locX, locY) => {
+    let isInSnake = false;
+    snakeObject.forEach(j => {
+        if (j[0] === locX && j[1] === locY) { isInSnake = true }
+    })
+    console.log(isInSnake);
+    return isInSnake
 }
 
 const growSnake = (X, Y) => {
